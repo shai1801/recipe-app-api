@@ -19,7 +19,7 @@ RECIPES_URL = reverse('recipe:recipe-list')
 
 def details_url(recipe_id):
     """Create and return a recipe detail URL."""
-    return reverse('recipe:recipt-details', args=[recipe_id])
+    return reverse('recipe:recipe-detail', args=[recipe_id])
 
 
 def create_recipe(user, **params):
