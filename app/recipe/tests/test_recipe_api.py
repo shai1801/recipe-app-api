@@ -107,6 +107,7 @@ class PrivateRecipeAPITest(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
+
         for k,v in payload.items():
             self.assertEqual(getattr(recipe,k),v)
         self.assertEqual(recipe.user, self.user)
@@ -135,13 +136,13 @@ class PrivateRecipeAPITest(TestCase):
         recipe = create_recipe(
             user=self.user,
             title='Sample recipe title',
-            link='http://exmpale.com/recipe.pdf',
+            link='https://exmpale.com/recipe.pdf',
             description='Sample recipe descirption',
         )
 
         payload = {
             'title': 'New recipe title',
-            'link': 'htttp://exmpale.com/new-recipe.pdf',
+            'link': 'https://exmpale.com/new-recipe.pdf',
             'description': 'New recipe description',
             'time_minutes': 10,
             'price': Decimal(2.50),
