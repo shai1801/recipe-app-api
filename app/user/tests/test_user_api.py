@@ -11,9 +11,11 @@ CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
+
 def create_user(**params):
     """Create and return a new user"""
     return get_user_model().objects.create_user(**params)
+
 
 class PublicUserApiTests(TestCase):
     """Test the public features of the user API"""
@@ -24,11 +26,11 @@ class PublicUserApiTests(TestCase):
     def test_create_user_success(self):
         """Test creating a user is successful."""
         payload = {
-            'email' : 'test@example.com',
-            'password' : 'testpass123',
-            'name' : 'Test Name',
+            'email': 'test@example.com',
+            'password': 'testpass123',
+            'name': 'Test Name',
         }
-        res = self.client.post(CREATE_USER_URL,payload)
+        res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email=payload['email'])
         self.assertTrue(user.check_password(payload['password']))
@@ -37,9 +39,9 @@ class PublicUserApiTests(TestCase):
     def test_user_with_email_exists_error(self):
         """Test error return if user with email exists"""
         payload = {
-            'email' : 'test@example.com',
-            'password' : 'testpass123',
-            'name' : 'Test Name'
+            'email': 'test@example.com',
+            'password': 'testpass123',
+            'name': 'Test Name'
         }
         create_user(**payload)
         res = self.client.post(CREATE_USER_URL, payload)
@@ -85,7 +87,7 @@ class PublicUserApiTests(TestCase):
         """Test return error if credentials are invalid"""
         create_user(email='test@example.com', password='goodpass')
 
-        payload = {'email': 'test@example.com', 'password':'badpass'}
+        payload = {'email': 'test@example.com', 'password': 'badpass'}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn('token', res.data)
@@ -94,7 +96,7 @@ class PublicUserApiTests(TestCase):
     def test_token_blank_password(self):
         """Test return error if password is blank"""
         create_user(email='test@example.com', password='notblankpass')
-        payload = {'email':'test@example.com', 'password':''}
+        payload = {'email': 'test@example.com', 'password': ''}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn('token', res.data)
@@ -131,7 +133,7 @@ class PrivateUserApiTest(TestCase):
 
     def test_post_me_not_allowed(self):
         """Test POST is not allowed for the me endpoint"""
-        res = self.client.post(ME_URL,{})
+        res = self.client.post(ME_URL, {})
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 

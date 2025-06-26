@@ -10,8 +10,8 @@ from core import models
 
 
 def create_user(email='user@example.com', password='testpass123'):
-        """Create and return a new user."""
-        return get_user_model().objects.create_user(email, password)
+    """Create and return a new user."""
+    return get_user_model().objects.create_user(email, password)
 
 
 class ModelTests(TestCase):
@@ -67,7 +67,7 @@ class ModelTests(TestCase):
 
         recipe = models.Recipe.objects.create(
             user=user,
-            title= 'Sample recipe name',
+            title='Sample recipe name',
             time_minutes=5,
             price=Decimal('5.50'),
             description='Sample recipe description',
@@ -81,4 +81,3 @@ class ModelTests(TestCase):
         tag = models.Tag.objects.create(user=user, name='Tag1')
 
         self.assertEqual(str(tag), tag.name)
-
