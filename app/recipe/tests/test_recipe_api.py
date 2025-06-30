@@ -15,6 +15,7 @@ from recipe.serializers import (
     RecipeDetailSerializer,
     )
 
+
 RECIPES_URL = reverse('recipe:recipe-list')
 
 
