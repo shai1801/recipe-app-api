@@ -7,6 +7,7 @@ from core.models import (
     Tag,
     )
 
+
 class TagSerializer(serializers.ModelSerializer):
     """Serializer for tags."""
 
@@ -36,7 +37,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             recipe.tags.add(tag_obj)
 
-
     def create(self, validate_data):
         """Create a recipe"""
         tags = validate_data.pop('tags', [])
@@ -58,12 +58,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view"""
 
     class Meta(RecipeSerializer.Meta):
         fields = RecipeSerializer.Meta.fields + ['description']
-
-
-
