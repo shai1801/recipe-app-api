@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
@@ -60,6 +59,8 @@ class Recipe(models.Model):
 
     tags = models.ManyToManyField('Tag')
 
+    ingredient = models.ManyToManyField('Ingredient')
+
     def __str__(self):
         return self.title
 
@@ -68,6 +69,19 @@ class Tag(models.Model):
     """Tags for filtering recipies"""
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient for Recipies"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
