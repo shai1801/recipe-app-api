@@ -38,7 +38,7 @@ class PublicTagApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PrivateTagApiTest(TestCase):
+class PrivateTagApiTests(TestCase):
     """Test for authenticated API requests"""
 
     def setUp(self):
@@ -46,7 +46,7 @@ class PrivateTagApiTest(TestCase):
         self.client = APIClient()
         self.client.force_authenticate(self.user)
 
-    def test_retirieve_tags(self):
+    def test_retrieve_tags(self):
         """Test retrieving a list tags."""
         Tag.objects.create(user=self.user, name='Vegan')
         Tag.objects.create(user=self.user, name='Dessert')
@@ -75,7 +75,7 @@ class PrivateTagApiTest(TestCase):
         """Test for updating tag."""
         tag = Tag.objects.create(user=self.user, name='After Dinner')
 
-        payload = {'name': 'After Dinner'}
+        payload = {'name': 'Dessert'}
         url = detail_url(tag.id)
         res = self.client.patch(url, payload)
 
